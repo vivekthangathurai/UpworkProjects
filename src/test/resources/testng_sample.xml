@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Xray example tests">
+	<listeners>
+		<listener class-name="com.calc.test.XrayListener2" />
+	</listeners>
+	<test name="Xray tests">
+		<classes>
+			<class name="com.calc.test.SampleTest">				
+			</class>
+		</classes>
+	</test>
+</suite>

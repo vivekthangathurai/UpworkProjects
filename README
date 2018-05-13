@@ -1,0 +1,46 @@
+Before running the tests Pre-requsite:
+
+1. Project in the JIRA software - which needs to be mentioned in the pom.xml  ( eg TEST) .Change it in the pom.xml under properties <xray.projectKey>TEST</xray.projectKey> 
+2. Provide the  Xray client  username/password. In the file XrayReporter.java in line number 22  provide the username and password for the JIRA account. Note the the account should have access to create issues, update issues in the PROJECT.
+
+Ways to run the test:
+Way 1:
+ 
+Run  the project as Maven with goals  - “clean test”.  Suite file to be executed is configured in the maven-surefire-plugin configuration. This will run the CalcTest.java and upload the result generated to JIRA PROJECT - TEST as mentioned in prerequisite. 
+The upload of testing result  is done by XrayReporter.java which will get executed at the end of the run.
+
+Note: if the tests are run against manual tests.  Test method needs to be annotated with @Xray(test = "TES-7") where TES-7 is a test in the project. Otherwise Xray creates a test using the class
+and method name of the testng test.
+
+Way 2:
+It needs Xray "Test Execution Issue" eg. TEST-11 with tests added to it. And those tests should be mapped to automated tests by annotation eg. @Xray(test = "TEST-7”) on the test method in java class.
+please check the SampleTest.java
+
+Change the username/password for Xray client in XrayListener2.java line number 107 to the active use which will be used to create and update issues.
+
+Change the testing suite in the surefire plugin configuration in pom.xml to “src/test/resources/testng_sample.xml”
+
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+        <version> 2.20.1</version>
+          <configuration>
+             <testFailureIgnore>true</testFailureIgnore>
+             <suiteXmlFiles>
+             <suiteXmlFile>src/test/resources/testng_sample.xml</suiteXmlFile>
+             </suiteXmlFiles>
+             <properties>
+             <property>
+               <name>usedefaultlisteners</name>
+               <value>false</value> <!-- disabling default listeners is optional -->
+             </property>
+                <property>
+                  <name>reporter</name>
+                  <value>org.testng.reporters.XMLReporter:generateTestResultAttributes=true,generateGroupsAttribute=true</value>
+                </property>
+             </properties>
+   </configuration>
+</plugin>
+
+Provide the Test Execution Key using maven arguments eg “testExecKey=TEST-11” while running goals “clean test” where testExecKey is key and TES-11 is value. 
+This will update result at runtime and not at the end. 
