@@ -1,6 +1,6 @@
 Before running the tests Pre-requsite:
 
-1. Project in the JIRA software - which needs to be mentioned in the pom.xml  ( eg TEST) .Change it in the pom.xml under properties <xray.projectKey>TEST</xray.projectKey> 
+1. Project in the JIRA is required, if not present create one which needs to be mentioned in the pom.xml  ( eg TEST) .Change it in the pom.xml under properties <xray.projectKey>TEST</xray.projectKey> 
 2. Provide the  Xray client  username/password. In the file XrayReporter.java in line number 22  provide the username and password for the JIRA account. Note the the account should have access to create issues, update issues in the PROJECT.
 
 Ways to run the test:
